@@ -1,0 +1,58 @@
+name: rg-sandeep123
+
+trigger: none
+
+pool: selfagent
+
+steps:
+- task: TerraformInstaller@1
+  displayName: TASK1-terraform install
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  displayName: TASK2-terraform init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    backendServiceArm: 'new svc'
+    backendAzureRmResourceGroupName: 'rg-pan'
+    backendAzureRmStorageAccountName: 'stghero'
+    backendAzureRmContainerName: 'container'
+    backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+
+  displayName: TASK3-terraform validate
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+
+- task: TerraformTask@5
+  displayName: TASK4-terraform plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    environmentServiceNameAzureRM: 'new svc'
+
+
+- task: TerraformTask@5
+  displayName: TASK5-terraform apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'new svc'
+
+
+
+
+
+
+
+ 
+
