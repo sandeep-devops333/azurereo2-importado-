@@ -2,7 +2,7 @@ name: rg-sandeep123
 
 trigger: none
 
-pool: selfagent
+pool: self agent
 
 steps:
 - task: TerraformInstaller@1
